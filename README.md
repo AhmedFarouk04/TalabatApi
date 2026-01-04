@@ -205,4 +205,11 @@ Clean Architecture • APIs • Payments • Identity
 
 ```
 
-- 
+لو حابب:
+- نسخة أقصر للـ **CV**
+- نسخة LinkedIn description
+- إضافة **Architecture Diagram**
+- أو README متقدم فيه API examples  
+
+قولي 👌
+```
