@@ -1,4 +1,3 @@
-تمام، إليك نسخة **محدثة وجاهزة للـ copy-paste مباشرة** في ملف `README.md` في root الـ repository (نفس مكان الـ `.sln`).
 
 ```markdown
 # Talabat API
@@ -215,11 +214,3 @@ Swagger UI usually available at: `https://localhost:5001/swagger`
 Testability • Maintainability • Scalability • Clear boundaries • Real enterprise patterns
 
 ---
-
-## 📄 License
-
-MIT License (or educational/portfolio use — feel free to adapt)
-
-Happy coding! 🚀
-```
-
