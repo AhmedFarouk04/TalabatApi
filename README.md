@@ -1,214 +1,200 @@
-
 ```markdown
 # Talabat API
 
-A production-grade **ASP.NET Core Web API** built with **.NET 8**, following **Clean Architecture** and **Domain-Driven Design (DDD)** principles.  
-The project showcases modern best practices for building scalable, maintainable, testable, and enterprise-ready backend systems.
+![.NET](https://img.shields.io/badge/.NET%208-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
+![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
+![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-Enterprise-blue?style=for-the-badge)
+
+Production-grade **ASP.NET Core Web API** built with **.NET 8**  
+following **Clean Architecture** + **Domain-Driven Design (DDD)** principles.
+
+Showcases modern, scalable, testable enterprise backend patterns.
 
 ---
 
-## 📌 Project Overview
+## Project Overview
 
-**Talabat API** is a complete e-commerce backend that handles:
+Complete e-commerce backend featuring:
 
-- Product catalog with advanced filtering & pagination
-- Shopping basket & checkout process
-- Orders creation & lifecycle management
-- Secure customer authentication & authorization
-- Stripe payment integration (Payment Intents + Webhooks)
-- Clean separation of concerns across all layers
+- Product catalog (filtering, pagination, brands & types)
+- Shopping basket & checkout flow
+- Order creation & lifecycle
+- Secure authentication & authorization (JWT + Identity)
+- Stripe payments (Payment Intents + Webhooks)
+- Clean separation of concerns
 
-The solution is structured into **4 independent projects** using **Clean Architecture**.
+Structured as **4 independent projects** using **Clean Architecture**.
 
 ---
 
-## 🏗 Architecture Overview
+## Architecture
 
 ```
-Talabat.API.sln
-│
-├── Talabat.APIs          → Presentation Layer (Controllers + DTOs + Middleware)
-├── Talabat.Core          → Domain Layer        (Entities + Interfaces + Business Rules)
-├── Talabat.Repository    → Infrastructure      (EF Core + Repositories + Data Seed)
-└── Talabat.Service       → Application Layer   (Services + Orchestration + Use Cases)
+Talabat.sln
+├─ Talabat.APIs          Presentation     (Controllers, DTOs, Middleware, Swagger)
+├─ Talabat.Core          Domain           (Entities, Aggregates, Interfaces, Specs)
+├─ Talabat.Repository    Infrastructure   (EF Core, Repositories, Data Seed)
+└─ Talabat.Service       Application      (Services, Use Cases, Orchestration)
 ```
 
-### Dependency Rule (Clean Architecture)
-- Outer layers depend **only** on inner layers
-- `Core` depends on **nothing**
-- `Repository` & `Service` depend on `Core`
-- `APIs` depends on `Core`, `Service` & `Repository`
+**Dependency direction**  
+→ Outer layers depend **only** inward  
+→ `Core` depends on **nothing**
 
 ---
 
-## 📦 Layers Breakdown
+## Layers Breakdown
 
-### 1️⃣ Talabat.APIs (Presentation Layer)
+### 1. Talabat.APIs – Presentation
 
 **Responsibilities**  
-- HTTP endpoints & routing  
-- Input validation & DTO → Entity mapping  
-- Authentication / Authorization / Identity  
-- Global exception handling  
-- Swagger OpenAPI documentation  
+HTTP • Validation • Mapping • Auth • Exceptions • Swagger
 
-**Key folders & files**  
-- `Controllers/`  
-  - AccountsController  
-  - ProductsController  
-  - BasketsController  
-  - OrdersController  
-  - PaymentsController  
-- `Dtos/`  
-- `Middlewares/` → Global error handling  
-- `Extensions/` → Service collection helpers  
-- `Helper/` → AutoMapper profiles, resolvers  
-- `Program.cs` & `appsettings*.json`
+**Main folders**  
+- Controllers/ (Accounts, Products, Baskets, Orders, Payments)  
+- Dtos/  
+- Middlewares/  
+- Extensions/  
+- Helpers/ (AutoMapper, resolvers)
 
 **Patterns**  
-DTO • AutoMapper • Middleware • Minimal APIs style (optional)
+DTO • AutoMapper • Middleware
 
----
-
-### 2️⃣ Talabat.Core (Domain Layer)
-
-**The heart of the application — pure business logic**
+### 2. Talabat.Core – Domain (Pure Business)
 
 **Responsibilities**  
-- Domain entities & value objects  
-- Aggregates & business invariants  
-- Repository & service interfaces  
-- Query specifications  
+Entities • Aggregates • Business rules • Specifications
 
-**Key components**  
-- `Entities/` → Product, Basket, Order, OrderItem, ...  
-- `Order_Aggregation/` → Order + Address + DeliveryMethod  
-- `Interfaces/` → IGenericRepository, IBasketRepository, IUnitOfWork, ...  
-- `Specifications/` → ProductWithBrandAndTypeSpec, OrderByPaymentIntentSpec, ...  
-- `UnitOfWork.cs`
+**Main folders**  
+- Entities/  
+- Order_Aggregation/  
+- Interfaces/ (IGenericRepository, IBasketRepository, IUnitOfWork…)  
+- Specifications/  
+- UnitOfWork.cs
 
 **Patterns**  
-DDD • Specification Pattern • Repository Interface • Aggregate Root
+DDD • Specification • Aggregate Root  
+**No infrastructure** (no EF, no Stripe, no web)
 
-🚫 **Zero infrastructure here** (no EF, no Stripe, no HTTP)
-
----
-
-### 3️⃣ Talabat.Repository (Infrastructure Layer)
+### 3. Talabat.Repository – Infrastructure
 
 **Responsibilities**  
-- EF Core DbContext & configurations  
-- Concrete repository implementations  
-- Data seeding (brands, types, products, delivery methods)  
-- Identity persistence (users & roles)
+EF Core • Repositories • Migrations • Data seeding • Identity store
 
-**Key components**  
-- `Data/StoreContext.cs`  
-- `Configurations/` → Fluent API entity mappings  
-- `Migrations/`  
-- `DataSeed/`  
-- `Repositories/` → Generic + Basket-specific  
-- `UnitOfWork.cs`
+**Main folders**  
+- Data/ (StoreContext)  
+- Configurations/  
+- Migrations/  
+- DataSeed/  
+- Repositories/
 
 **Patterns**  
-Repository Pattern • Unit of Work • EF Core Fluent API
+Repository • Unit of Work • Fluent API
 
----
-
-### 4️⃣ Talabat.Service (Application Layer)
+### 4. Talabat.Service – Application
 
 **Responsibilities**  
-- Orchestrate business use cases  
-- Coordinate domain logic & infrastructure  
-- Handle payment flows & token generation  
-- Implement complex order workflows
+Orchestration • Payment logic • Token generation • Order workflow
 
-**Key services**  
-- `OrderService`  
-- `PaymentService`  
-- `TokenService`
+**Main services**  
+- OrderService  
+- PaymentService  
+- TokenService
 
 **Patterns**  
-Application Services • Use Case orchestration • Facade
+Application Services • Facade
 
 ---
 
-## 💳 Stripe Payment Integration
+## Stripe Integration
 
-- Payment Intent creation & client-secret return  
-- Webhook endpoint to listen for Stripe events  
-- Signature verification for security  
-- Automatic order status update (`Pending → PaymentReceived / Failed`)
+- PaymentIntent creation  
+- Webhook processing + signature verification  
+- Order status sync (`Pending` → `PaymentReceived` / `Failed`)
 
-**Supported webhook events**  
-- `payment_intent.succeeded`  
-- `payment_intent.payment_failed`
+**Events**  
+`payment_intent.succeeded`  
+`payment_intent.payment_failed`
 
 **Endpoint**  
 `POST /api/payments/webhook`
 
-> **Important**: Webhook secret is stored in user-secrets / environment variables — **never** committed.
+> Webhook secret **never** committed — use user-secrets or env vars.
 
 ---
 
-## 🔐 Authentication & Security
+## Security
 
-- **ASP.NET Core Identity**  
-- **JWT Bearer** authentication  
-- Role-based & policy-based authorization  
-- Secure password hashing (PBKDF2)  
-- Token revocation not implemented (short-lived tokens)
+- ASP.NET Core Identity  
+- JWT Bearer tokens  
+- Role & policy authorization  
+- PBKDF2 hashing  
+- Short-lived tokens
 
 ---
 
-## ⚙ Configuration & Secrets Management
+## Configuration
 
-| File                            | Purpose                              |
+| File                           | Purpose                              |
 |--------------------------------|--------------------------------------|
 | `appsettings.json`             | Base / safe defaults                 |
 | `appsettings.Development.json` | Local secrets & connection strings   |
 | `appsettings.Example.json`     | Template for contributors            |
 
-**Never commit**: JWT key, Stripe secret key, webhook signing secret, database passwords
+**Never commit**: JWT key, Stripe keys, webhook secret, DB credentials
 
 ---
 
-## 🚀 Quick Start (Local Development)
+## Quick Start
 
 ```bash
-# 1. Clone & enter directory
-git clone https://github.com/your-username/TalabatApi.git
+# Clone
+git clone https://github.com/AhmedFarouk04/TalabatApi.git
 cd TalabatApi
 
-# 2. Copy example config & fill your secrets
+# Config
 cp appsettings.Example.json appsettings.Development.json
-
-# 3. (optional) Use user-secrets for sensitive values
-dotnet user-secrets set "Jwt:Key" "your-very-long-secret-key"
+# or use user-secrets:
+dotnet user-secrets init
+dotnet user-secrets set "Jwt:Key"        "your-very-long-secret-key"
 dotnet user-secrets set "Stripe:SecretKey" "sk_test_..."
 
-# 4. Apply migrations & seed data
+# Database + seed
 dotnet ef database update --project Talabat.Repository --startup-project Talabat.APIs
 
-# 5. Run the API
+# Run
 dotnet run --project Talabat.APIs
 ```
 
-Swagger UI usually available at: `https://localhost:5001/swagger`
+→ Swagger: `https://localhost:<port>/swagger`
 
 ---
 
-## 🛠 Design Patterns & Principles Used
+## Design Patterns & Principles
 
 - Clean Architecture  
-- Domain-Driven Design (DDD)  
+- Domain-Driven Design  
 - Specification Pattern  
 - Repository + Unit of Work  
 - Dependency Injection  
 - DTO + AutoMapper  
-- CQRS-lite style separation  
-- Middleware pipeline  
-- Vertical Slice hints (future-ready)
+- CQRS-lite separation  
+- Middleware pipeline
 
-**Why this structure?**  
-Testability • Maintainability • Scalability • Clear boundaries • Real enterprise patterns
+**Benefits**  
+→ Testable  
+→ Maintainable  
+→ Scalable  
+→ Enterprise-grade boundaries
+
+---
+
+## License
+
+MIT License  
+(Feel free to use for learning / portfolio – attribution appreciated)
+
+Happy coding! 🚀
+
+جرب تحطه واعمل refresh للصفحة — المفروض يبقى **أنظف وأجمل** بكتير في الـ dark theme.  
+لو عايز نعدل حاجة تانية (نضيف Tests، Docker، CI، API examples …) قولي.
