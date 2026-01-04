@@ -212,5 +212,3 @@ Swagger UI usually available at: `https://localhost:5001/swagger`
 
 **Why this structure?**  
 Testability • Maintainability • Scalability • Clear boundaries • Real enterprise patterns
-
----
