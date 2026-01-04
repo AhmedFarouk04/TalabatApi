@@ -1,132 +1,126 @@
 ```markdown
 # Talabat API
 
-![.NET 8](https://img.shields.io/badge/.NET%208-5C2D91?style=flat&logo=.net&logoColor=white)
-![C#](https://img.shields.io/badge/c%23-239120?style=flat&logo=c-sharp&logoColor=white)
-![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-Enterprise-blue?style=flat)
-
 Production-ready e-commerce backend  
-built with **ASP.NET Core 8** • **Clean Architecture** • **DDD**
+built with ASP.NET Core 8 • Clean Architecture • DDD
 
 ---
 
 ## Features
 
-- Product catalog (filter, paginate, brands & types)
-- Shopping basket
-- Order creation & management
-- Customer authentication (JWT + Identity)
-- Stripe Payment Intents + Webhook
+- Product catalog (filter, paginate, brands & types)  
+- Shopping basket  
+- Order creation & management  
+- Customer authentication (JWT + Identity)  
+- Stripe Payment Intents + Webhook  
 - Clean layered architecture
 
 ---
 
-## Structure
+## Project Structure
 
 ```
 Talabat.sln
-├── Talabat.APIs        Presentation
-├── Talabat.Core        Domain
-├── Talabat.Repository  Infrastructure
-└── Talabat.Service     Application
+├── Talabat.APIs         Presentation Layer
+├── Talabat.Core         Domain Layer
+├── Talabat.Repository   Infrastructure Layer
+└── Talabat.Service      Application Layer
 ```
 
-**Dependency flow** → inward only  
-`Core` ← has **zero** dependencies
+Core has zero dependencies  
+All outer layers depend inward only
 
 ---
 
-## Layers at a glance
+## Layers Summary
 
 **Talabat.APIs**  
-Controllers • DTOs • Auth • Swagger • Exception handling
+Controllers, DTOs, Auth, Swagger, Error handling
 
 **Talabat.Core**  
-Entities • Aggregates • Specifications • Interfaces  
-No EF / no external deps
+Entities, Aggregates, Specifications, Interfaces  
+(No EF, no external code)
 
 **Talabat.Repository**  
-EF Core • DbContext • Repositories • Migrations • Seed
+EF Core, DbContext, Repositories, Migrations, Data Seed
 
 **Talabat.Service**  
-OrderService • PaymentService • TokenService  
-Business orchestration
+OrderService, PaymentService, TokenService  
+Business logic orchestration
 
 ---
 
-## Stripe
+## Stripe Payment
 
-- Payment Intent creation
-- Webhook (`/api/payments/webhook`)
-- Events: `succeeded`, `payment_failed`
-- Signature verification
-- Order status update
+- Create Payment Intent  
+- Webhook endpoint: `/api/payments/webhook`  
+- Events: succeeded, payment_failed  
+- Signature verification  
+- Update order status automatically  
 
-> Secret **never** in git — use user-secrets / env
+Webhook secret stored in user-secrets or environment (never in git)
 
 ---
 
 ## Security
 
-- ASP.NET Identity
-- JWT Bearer
-- PBKDF2 hashing
-- Role-based authorization
+- ASP.NET Identity  
+- JWT Bearer tokens  
+- Secure password hashing  
+- Role-based authorization  
 
 ---
 
 ## Configuration
 
-```text
-appsettings.json           → base config
-appsettings.Development.json → secrets (git ignored)
-appsettings.Example.json   → template
-```
+Use one of these files:
+
+- `appsettings.json` → basic config  
+- `appsettings.Development.json` → your secrets (git ignored)  
+- `appsettings.Example.json` → template to copy  
 
 Never commit: JWT key, Stripe keys, webhook secret
 
 ---
 
-## Quick Start
+## How to Run
 
 ```bash
 git clone https://github.com/AhmedFarouk04/TalabatApi.git
 cd TalabatApi
 
-# Config (choose one)
+# Add your secrets (choose one way)
+# Way 1: copy example
 cp appsettings.Example.json appsettings.Development.json
-# or
+
+# Way 2: use user-secrets
 dotnet user-secrets set "Jwt:Key" "your-very-long-key"
 dotnet user-secrets set "Stripe:SecretKey" "sk_test_..."
 
-# Database
+# Create & seed database
 dotnet ef database update --project Talabat.Repository --startup-project Talabat.APIs
 
-# Run
+# Start the API
 dotnet run --project Talabat.APIs
 ```
 
-Swagger → `/swagger`
+Open Swagger: https://localhost:<port>/swagger
 
 ---
 
-## Main Patterns
+## Main Patterns Used
 
-- Clean Architecture
-- DDD
-- Specification Pattern
-- Repository + Unit of Work
-- Dependency Injection
-- DTO + AutoMapper
+- Clean Architecture  
+- Domain-Driven Design  
+- Specification Pattern  
+- Repository + Unit of Work  
+- DTO + AutoMapper  
 
-**Why?** Testable • Maintainable • Scalable
+→ Testable, maintainable, scalable
 
 ---
 
-## License
-
-MIT — for learning & portfolio use
-
+MIT License  
+For learning and portfolio use  
 Happy coding! 🚀
-
-لو لسه فيه جزء معين مش عاجبك (الـ tree، الـ badges، الـ quick start، أي حاجة)، قولي بالظبط إيه اللي مضايقك ونعدله مع بعض لحد ما يبقى مريح 100%.
+```
