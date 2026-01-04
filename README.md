@@ -1,6 +1,3 @@
----
-
-```md
 # Talabat API
 
 Production-ready e-commerce backend  
@@ -166,5 +163,3 @@ https://localhost:<port>/swagger
 
 Ahmed Farouk
 Backend Engineer (.NET)
-
----
