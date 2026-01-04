@@ -1,0 +1,80 @@
+############################
+# .NET / Visual Studio
+############################
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+############################
+# Build / Publish
+############################
+Debug/
+Release/
+x64/
+x86/
+AnyCPU/
+
+############################
+# ASP.NET Core
+############################
+appsettings.Development.json
+appsettings.Local.json
+appsettings.Production.json
+
+############################
+# Secrets & Environment
+############################
+secrets.json
+.env
+.env.*
+*.env
+
+############################
+# Stripe / Keys / Logs
+############################
+stripe-cli.log
+logs/
+*.log
+
+############################
+# Database / Cache
+############################
+*.mdf
+*.ldf
+*.sqlite
+*.db
+dump.sql
+
+############################
+# Node / Frontend (لو موجود)
+############################
+node_modules/
+dist/
+build/
+.angular/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+############################
+# OS / Editor
+############################
+.DS_Store
+Thumbs.db
+
+############################
+# Rider / VS Code
+############################
+.idea/
+.vscode/
+
+############################
+# Misc
+############################
+*.tmp
+*.bak
+*.swp
