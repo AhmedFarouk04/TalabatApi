@@ -1,11 +1,10 @@
-تمام 👌
-ده **README.md معدل ومحسّن بالكامل**، مرتب، احترافي، وجاهز كوبي-باست **زي ما هو** على GitHub بدون أي مشاكل تنسيق أو بلوكات مكسورة:
+---
 
-```markdown
+```md
 # Talabat API
 
-🚀 **Production-ready e-commerce backend**  
-Built with **ASP.NET Core 8** • **Clean Architecture** • **Domain-Driven Design (DDD)**
+Production-ready e-commerce backend  
+built with **ASP.NET Core 8** • **Clean Architecture** • **Domain-Driven Design (DDD)**
 
 ---
 
@@ -14,27 +13,24 @@ Built with **ASP.NET Core 8** • **Clean Architecture** • **Domain-Driven Des
 - 🛒 Product catalog (filtering, pagination, brands & types)
 - 🧺 Shopping basket (Redis)
 - 📦 Order creation & management
-- 👤 Customer authentication (JWT + ASP.NET Identity)
+- 🔐 Customer authentication (JWT + ASP.NET Identity)
 - 💳 Stripe Payment Intents + Webhook integration
 - 🧱 Clean layered architecture with strict dependency rules
-- 🧪 Ready for testing & extension
+- ✅ Ready for testing & extension
 
 ---
 
-## 🏗️ Project Structure
-
-```
+## 🏗 Project Structure
 
 Talabat.sln
-├── Talabat.APIs         → Presentation Layer
-├── Talabat.Core         → Domain Layer
-├── Talabat.Repository   → Infrastructure Layer
-└── Talabat.Service      → Application Layer
+├── Talabat.APIs → Presentation Layer
+├── Talabat.Core → Domain Layer
+├── Talabat.Repository → Infrastructure Layer
+└── Talabat.Service → Application Layer
 
-```
 
-### Dependency Rule
-- **Talabat.Core** has **zero external dependencies**
+**Dependency Rule**
+- `Talabat.Core` has **zero external dependencies**
 - All outer layers depend **inward only**
 - No circular references
 
@@ -48,85 +44,75 @@ Talabat.sln
 - Authentication & Authorization
 - Swagger
 - Global error handling
-- Middleware & Extensions
+- Stripe Webhook endpoint
 
 ### 🔹 Talabat.Core (Domain Layer)
-- Entities & Value Objects
-- Aggregates (Order Aggregate)
+- Entities & Aggregates
+- Value Objects
 - Specifications
-- Interfaces (Repositories, Services)
-- Domain enums & base classes  
-❌ No EF Core  
-❌ No external libraries
+- Repository & Service interfaces  
+🚫 No EF Core  
+🚫 No external libraries
 
 ### 🔹 Talabat.Repository (Infrastructure Layer)
 - Entity Framework Core
 - DbContexts
 - Repository implementations
-- Unit of Work
 - Migrations
 - Database seeding
 
 ### 🔹 Talabat.Service (Application Layer)
-- Business logic orchestration
 - OrderService
 - PaymentService
 - TokenService
-- Coordinates domain & infrastructure
+- Business logic orchestration
 
 ---
 
-## 💳 Stripe Payment Flow
+## 💳 Stripe Payment Integration
 
-- Create **Payment Intent**
+- Create Payment Intent
 - Webhook endpoint:  
-```
 
 POST /api/payments/webhook
 
-````
-- Handled events:
+- Supported events:
 - `payment_intent.succeeded`
 - `payment_intent.payment_failed`
-- Signature verification enabled
-- Order status updated automatically
+- Signature verification
+- Automatic order status update
 
-🔐 **Important:**  
-Stripe keys & webhook secret are stored in:
-- `appsettings.Development.json`
-- User Secrets
-- Environment variables  
-❌ Never committed to Git
+> ⚠️ Webhook secret is stored using **User Secrets** or **Environment Variables**  
+> **Never committed to GitHub**
 
 ---
 
 ## 🔐 Security
 
-- ASP.NET Core Identity
+- ASP.NET Identity
 - JWT Bearer Authentication
 - Secure password hashing
 - Role-based authorization
-- Claims-based user access
 
 ---
 
-## ⚙️ Configuration Strategy
+## ⚙️ Configuration
 
-The project uses **environment-based configuration**:
+### Files
 
 - `appsettings.json`  
-→ Base (safe, no secrets)
+→ Shared non-sensitive config
 
 - `appsettings.Development.json`  
-→ Local secrets (❌ git ignored)
+→ Local secrets (**git ignored**)
 
 - `appsettings.Example.json`  
 → Template for developers
 
 ### ❌ Never commit:
-- JWT Secret Key
-- Stripe Secret / Publishable Keys
-- Stripe Webhook Secret
+- JWT secret key
+- Stripe secret / publishable keys
+- Stripe webhook secret
 - Production connection strings
 
 ---
@@ -136,80 +122,49 @@ The project uses **environment-based configuration**:
 ```bash
 git clone https://github.com/AhmedFarouk04/TalabatApi.git
 cd TalabatApi
-````
 
-### 1️⃣ Configuration (choose one)
+Option A — Copy example file
 
-**Option A — Copy example**
-
-```bash
 cp appsettings.Example.json appsettings.Development.json
-```
 
-**Option B — User Secrets**
+Option B — Use User Secrets
 
-```bash
 dotnet user-secrets set "JWT:Key" "your-super-secret-key"
 dotnet user-secrets set "StripeSettings:SecretKey" "sk_test_..."
 dotnet user-secrets set "StripeSettings:WebhookSecret" "whsec_..."
-```
 
-### 2️⃣ Database setup
+Create & Seed Database
 
-```bash
 dotnet ef database update \
   --project Talabat.Repository \
   --startup-project Talabat.APIs
-```
 
-### 3️⃣ Run the API
+Run the API
 
-```bash
 dotnet run --project Talabat.APIs
-```
 
-📄 Swagger UI:
+Open Swagger:
 
-```
 https://localhost:<port>/swagger
-```
+
+🧠 Design Patterns Used
+
+    Clean Architecture
+
+    Domain-Driven Design (DDD)
+
+    Specification Pattern
+
+    Repository Pattern
+
+    Unit of Work
+
+    DTO + AutoMapper
+
+➡️ Highly maintainable • Testable • Scalable
+👤 Author
+
+Ahmed Farouk
+Backend Engineer (.NET)
 
 ---
-
-## 🧠 Design Patterns & Practices
-
-* Clean Architecture
-* Domain-Driven Design (DDD)
-* Specification Pattern
-* Repository Pattern
-* Unit of Work
-* DTO + AutoMapper
-* Dependency Injection
-* SOLID Principles
-
-✅ Testable
-✅ Maintainable
-✅ Scalable
-
----
-
-## 👨‍💻 Author
-
-**Ahmed Farouk**
-Backend .NET Developer
-Clean Architecture • APIs • Payments • Identity
-
----
-
-⭐ If you find this project useful, feel free to star the repository!
-
-```
-
-لو حابب:
-- نسخة أقصر للـ **CV**
-- نسخة LinkedIn description
-- إضافة **Architecture Diagram**
-- أو README متقدم فيه API examples  
-
-قولي 👌
-```
