@@ -120,7 +120,4 @@ Open Swagger: https://localhost:<port>/swagger
 
 ---
 
-MIT License  
-For learning and portfolio use  
-Happy coding! 🚀
-```
+
